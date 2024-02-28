@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://schemas.rnab.nl/giraal/PE/AgreementManagement/2.0"
+	xmlns:nsc="http://schemas.rnab.nl/giraal/1.2"
+	targetNamespace="http://schemas.rnab.nl/giraal/PE/AgreementManagement/2.0">
+
+	<xs:annotation>
+		<xs:documentation>
+			XSD for PEXAgreementManagement Web Service v2
+			Internal revision: 1
+			
+			Added the documentation element.
+       </xs:documentation>
+	</xs:annotation>
+
+	<xs:import namespace="http://schemas.rnab.nl/giraal/1.2"
+		schemaLocation="schemas.rnab.nl.giraal_v1.2.xsd" />
+
+	<xs:element name="ManageAgreementRequest"
+		type="tns:ManageAgreementRequestType" />
+
+	<xs:element name="ManageAgreementResponse"
+		type="tns:ManageAgreementResponseType" />
+
+	<xs:complexType name="ManageAgreementRequestType">
+		<xs:sequence>
+			<xs:element name="Action" type="tns:ActionType" />
+			<xs:element name="Prtcpnt" type="tns:ParticipantType" />
+			<xs:element name="Agrmnt" type="tns:AgreementType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ManageAgreementResponseType">
+		<xs:sequence>
+			<xs:element name="Action" type="tns:ActionType" />
+			<xs:element name="ResCd" type="tns:ResultCodeType" />
+			<xs:element name="Prtcpnt" type="tns:ParticipantType"
+				minOccurs="0" />
+			<xs:element name="Agrmnt" type="tns:AgreementType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="ActionType">
+		<xs:restriction base="xs:string">
+			<xs:length value="1" />
+			<!--			<xs:enumeration value="C" />-->
+			<!--			<xs:enumeration value="R" />-->
+			<!--			<xs:enumeration value="U" />-->
+			<!--			<xs:enumeration value="D" />-->
+			<!--			<xs:enumeration value="V" />-->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ResultCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				00: OK, 01: Agreement already exists etc.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ParticipantType">
+		<xs:sequence>
+			<xs:element name="Nm" type="nsc:string70" />
+			<xs:element name="Id" type="nsc:string35" />
+			<xs:element name="Bank" type="nsc:string35"
+				fixed="Rabobank" />
+			<xs:element name="Dprtmnt" type="nsc:string128" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AgreementType">
+		<xs:sequence>
+			<xs:element name="Nm" type="nsc:string70" minOccurs="0" />
+			<xs:element name="Prdct" type="tns:ProductType"
+				minOccurs="0" />
+			<xs:element name="Account" type="tns:AccountType"
+				minOccurs="0" maxOccurs="10" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="ProductType">
+		<xs:sequence>
+			<xs:element name="Scheme" type="tns:SchemeType" />
+			<xs:element name="StartDt" type="xs:date" />
+			<xs:element name="EndDt" type="xs:date" minOccurs="0" />
+			<xs:element name="CrdtLmt" type="tns:CreditLimitType" />
+			<xs:element name="CrdtLmtTmFrm" type="xs:int" />
+			<xs:element name="TxnTmLmt" type="tns:CreditLimitType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="SchemeType">
+		<xs:restriction base="nsc:ProcessingSchemeType">
+			<!--			<xs:enumeration value="SDDCORE" />-->
+			<!--			<xs:enumeration value="SDDB2B" />-->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CreditLimitType">
+		<xs:restriction base="nsc:AmountType">
+			<xs:minInclusive value="0" />
+			<xs:fractionDigits value="5" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="AccountType">
+		<xs:sequence>
+			<xs:element name="Nm" type="nsc:string70" />
+			<xs:element name="NickNm" type="nsc:string70" />
+			<xs:element name="Ctry" type="nsc:CountryType" />
+			<xs:element name="Ccy" type="nsc:CurrencyType" fixed="EUR" />
+			<xs:element name="IBAN" type="tns:string34" />
+			<xs:element name="BIC" type="tns:BICType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="string34">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="34" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BICType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="8" />
+			<xs:maxLength value="11" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

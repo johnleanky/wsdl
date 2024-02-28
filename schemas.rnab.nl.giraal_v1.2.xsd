@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by Rabobank Nederland (Rabobank Nederland) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.rnab.nl/giraal/1.2" targetNamespace="http://schemas.rnab.nl/giraal/1.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- Common -->
+	<xs:complexType name="SOAPBusinessException">
+		<xs:sequence>
+			<xs:element name="domain" type="tns:string256"/>
+			<xs:element name="messageNumber" type="xs:int"/>
+			<xs:element name="message" type="tns:largeString"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SOAPBusinessException" type="tns:SOAPBusinessException"/>
+	<!-- Enumerations -->
+	<xs:simpleType name="ResponseCodeType">
+		<xs:restriction base="tns:string4">
+<!--			<xs:enumeration value="ACK"/>-->
+<!--			<xs:enumeration value="NACK"/>-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignatureStatusType">
+		<xs:restriction base="tns:string10">
+<!--			<xs:enumeration value="Signed"/>-->
+<!--			<xs:enumeration value="Unsigned"/>-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InputMethodType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+<!--			<xs:enumeration value="File"/>-->
+<!--			<xs:enumeration value="Message"/>-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InterchangeStatusType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+<!--			<xs:enumeration value="Rejected by Bank"/>-->
+<!--			<xs:enumeration value="Accepted by Bank"/>-->
+<!--			<xs:enumeration value="Partially Rejected"/>-->
+<!--			<xs:enumeration value="Awaiting Authorisation"/>-->
+<!--			<xs:enumeration value="Authorised"/>-->
+<!--			<xs:enumeration value="Cancelled"/>-->
+<!--			<xs:enumeration value="Partially Confirmed"/>-->
+<!--			<xs:enumeration value="Confirmed by Bank"/>-->
+			<!--		<xs:enumeration value="Sent to Bank"/> = virtual status -->
+			<!-- = virtual status, used in ChangeInterchangeStatus service -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InstructionStatusType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+<!--			<xs:enumeration value="Rejected"/>-->
+<!--			<xs:enumeration value="Forced Rejected"/>-->
+<!--			<xs:enumeration value="Warehoused"/>-->
+<!--			<xs:enumeration value="Cancelled"/>-->
+<!--			<xs:enumeration value="Ready for Submission"/>-->
+<!--			<xs:enumeration value="Sent from ORM to PEX"/>-->
+<!--			<xs:enumeration value="Rejected by PEX"/>-->
+<!--			<xs:enumeration value="Accepted by PEX"/>-->
+<!--			<xs:enumeration value="Cancelled in PEX"/>-->
+<!--			<xs:enumeration value="Partially Authorised"/>-->
+<!--			<xs:enumeration value="Authorised"/>-->
+<!--			<xs:enumeration value="Postponed"/>-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransactionStatusType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProcessingSchemeType">
+		<xs:restriction base="tns:string35">
+<!--			<xs:enumeration value="SDDCORE"/>-->
+<!--			<xs:enumeration value="SDDB2B"/>-->
+<!--			<xs:enumeration value="SCT"/>-->
+<!--			<xs:enumeration value="UNKNOWN"/>-->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CategoryPurposeType">
+		<xs:restriction base="tns:string4"/>
+	</xs:simpleType>
+	<!-- 
+				 Simple types 
+	-->
+	<xs:simpleType name="StatusType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+			<!-- can be either an InterchangeStatus or an InstructionStatus -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentInterchangeIdType">
+		<xs:restriction base="tns:string35"/>
+	</xs:simpleType>
+	<xs:simpleType name="ChannelIdType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LatestUpdateReferenceType">
+		<xs:restriction base="tns:string35"/>
+		<!-- OPF generates this value, Channels should use it unchanged for change request -->
+	</xs:simpleType>
+	<xs:simpleType name="ReasonCodeType">
+		<xs:restriction base="tns:string4"/>
+	</xs:simpleType>
+	<xs:simpleType name="string2">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string4">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string8">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string10">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string19">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="19"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string30">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string32">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string35">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string40">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string64">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string70">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="70"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string128">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string140">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="140"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string256">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string1024">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="stringFilename">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="stringToken">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="512"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="largeString">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="65536"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="int10">
+		<xs:restriction base="xs:int">
+			<xs:totalDigits value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="int38">
+		<xs:restriction base="xs:int">
+			<xs:totalDigits value="38"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AmountType">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyType">
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryType">
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AccountType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="34"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Complex types -->
+	<xs:complexType name="HashValueType">
+		<xs:simpleContent>
+			<xs:extension base="tns:string64">
+				<xs:attribute name="hashAlgorithm" type="xs:string" use="required" fixed="SHA256"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- Giraal Comon Elements -->
+	<xs:element name="MessageID" type="tns:string35"/>
+	<xs:element name="PaymentInterchangeId" type="tns:PaymentInterchangeIdType"/>
+	<xs:element name="PaymentInstructionId" type="tns:string35"/>
+	<xs:element name="PaymentTransactionId" type="tns:string35"/>
+	<xs:element name="ProcessingScheme" type="tns:ProcessingSchemeType"/>
+	<xs:element name="ReasonCode" type="tns:ReasonCodeType"/>
+	<xs:element name="ResponseCode" type="tns:ResponseCodeType"/>
+	<xs:element name="ExchangeConditionExternalId" type="tns:string35"/>
+	<xs:element name="BankGroupId" type="tns:string35"/>
+	<xs:element name="BankId" type="tns:string35"/>
+	<xs:element name="RequestIdentifier" type="tns:string35"/>
+	<xs:element name="InputMethod" type="tns:InputMethodType"/>
+	<xs:element name="HashValue" type="tns:HashValueType"/>
+	<xs:element name="CustomerId" type="tns:string35"/>
+	<xs:element name="UserId" type="tns:string35"/>
+	<xs:element name="SignatureStatus" type="tns:SignatureStatusType"/>
+	<xs:element name="ChannelId" type="tns:ChannelIdType"/>
+</xs:schema>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ah="http://schemas.rnab.nl/giraal/AuditHeader/1.0" targetNamespace="http://schemas.rnab.nl/giraal/AuditHeader/1.0">
+	<xsd:complexType name="AuditHeaderType">
+		<xsd:sequence>
+			<xsd:element name="MessageID" type="ah:string35"/>
+			<xsd:element name="ReplyTo" type="ah:string256" minOccurs="0"/>
+			<xsd:element name="To" type="ah:string256" minOccurs="0"/>
+			<xsd:element name="Action" type="ah:string256"/>
+			<xsd:element name="From" type="ah:string256"/>
+			<xsd:element name="FaultTo" type="ah:string256" minOccurs="0"/>
+			<xsd:element name="RelatesTo" type="ah:string256" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AuditHeader" type="ah:AuditHeaderType"/>
+	
+	<xsd:simpleType name="string35">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="string256">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="256"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

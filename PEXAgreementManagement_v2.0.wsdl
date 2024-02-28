@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:ah="http://schemas.rnab.nl/giraal/AuditHeader/1.0"
+	xmlns:dws="http://schemas.rnab.nl/giraal/1.2"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://schemas.rnab.nl/giraal/PE/AgreementManagement/2.0"
+	xmlns:ws="http://schemas.rnab.nl/giraal/PE/AgreementManagement/2.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://schemas.rnab.nl/giraal/PE/AgreementManagement/2.0">
+
+	<xsd:documentation>
+		WSDL for
+		PEXAgreementManagement v2
+		Internal revision: 1
+		
+		Import location was incorrect for the xsd.
+	</xsd:documentation>
+
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import
+				namespace="http://schemas.rnab.nl/giraal/PE/AgreementManagement/2.0"
+				schemaLocation="schemas.rnab.nl.giraal.PE.AgreementManagement_v2.0.xsd" />
+			<xsd:import namespace="http://schemas.rnab.nl/giraal/1.2"
+				schemaLocation="schemas.rnab.nl.giraal_v1.2.xsd" />
+			<xsd:import
+				namespace="http://schemas.rnab.nl/giraal/AuditHeader/1.0"
+				schemaLocation="AuditHeader_v1.06.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="SOAPFault">
+		<wsdl:part element="dws:SOAPBusinessException" name="fault" />
+	</wsdl:message>
+	<wsdl:message name="ManageAgreementRequest">
+		<wsdl:part element="tns:ManageAgreementRequest"
+			name="parameters" />
+		<wsdl:part element="ah:AuditHeader" name="header" />
+	</wsdl:message>
+	<wsdl:message name="ManageAgreementResponse">
+		<wsdl:part element="tns:ManageAgreementResponse"
+			name="parameters" />
+		<wsdl:part element="ah:AuditHeader" name="header" />
+	</wsdl:message>
+	<wsdl:portType name="PEXAgreementManagementV200">
+		<wsdl:operation name="manageAgreement">
+			<wsdl:input message="tns:ManageAgreementRequest" />
+			<wsdl:output message="tns:ManageAgreementResponse" />
+			<wsdl:fault message="tns:SOAPFault" name="SOAPFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PEXAgreementManagementSoapBindingV200"
+		type="ws:PEXAgreementManagementV200">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/jms" />
+		<wsdl:operation name="manageAgreement">
+			<soap:operation />
+			<wsdl:input>
+				<soap:body parts="parameters" use="literal" />
+				<soap:header
+					message="ws:ManageAgreementRequest" part="header"
+					use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="parameters" use="literal" />
+				<soap:header
+					message="ws:ManageAgreementResponse" part="header"
+					use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SOAPFault">
+				<soap:fault name="SOAPFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PEXAgreementManagementV200">
+		<wsdl:port binding="ws:PEXAgreementManagementSoapBindingV200"
+			name="PEXAgreementManagementV200">
+			<soap:address
+				location="jms:/queue?destination=replace_with_queue_name&amp;connectionFactory=replace_with_queue_connection_factory&amp;targetService=PEXAgreementManagementV200" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
